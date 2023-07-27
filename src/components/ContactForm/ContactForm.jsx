@@ -11,7 +11,6 @@ class ContactForm extends Component {
     const { name, value } = target;
     this.setState({ [name]: value }, () => {});
   };
-
   handleSubmit = e => {
     e.preventDefault();
     const { name, number } = this.state;
@@ -24,6 +23,7 @@ class ContactForm extends Component {
     });
     this.setState({ name: '', number: '' });
   };
+
 
   render() {
     return (
