@@ -56,7 +56,6 @@ export class App extends Component {
 
   render() {
     const filteredContacts = this.getFilteredContacts();
-    console.log(filteredContacts);
     return (
       <>
         <ContactForm addContact={this.addContact} />
