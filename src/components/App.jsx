@@ -1,7 +1,6 @@
 import { Component } from 'react';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './Contactlist/Contactlist';
-import ContactListFilters from './ContactListFilters/ContactListFilters';
 import Filter from './Filter/Filter';
 import { nanoid } from 'nanoid';
 
@@ -13,12 +12,20 @@ export class App extends Component {
       { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
-    name: '',
-    number: '',
+
     searchQuery: '',
   };
 
   addContact = data => {
+    const finedNumber = this.state.contacts.find(
+      contact => contact.number.toLowerCase() === data.number.toLowerCase()
+    );
+    if (finedNumber) {
+      alert(
+        `In your phoneBook already have this number his name is ${finedNumber.name}`
+      );
+      return;
+    }
     const contact = {
       ...data,
       id: nanoid(),
@@ -35,19 +42,30 @@ export class App extends Component {
   };
 
   getFilteredContacts = () => {
-   const  normalizedFilter = this.state.searchQuery.toLowerCase();
+    const normalizedFilter = this.state.searchQuery.toLowerCase();
     return this.state.contacts.filter(({ name }) =>
       name.toLowerCase().includes(normalizedFilter)
     );
   };
 
+  deleteContact = id => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== id),
+    }));
+  };
+
   render() {
+    const filteredContacts = this.getFilteredContacts();
+    console.log(filteredContacts);
     return (
       <>
         <ContactForm addContact={this.addContact} />
         <Filter searchQuery={this.state.searchQuery} onChange={this.onChange} />
-        <ContactListFilters getFilteredContacts={this.getFilteredContacts} />
-        <ContactList contacts={this.state.contacts} title={'Contacts'} />
+        <ContactList
+          contacts={filteredContacts}
+          title={'Contacts'}
+          deleteContact={this.deleteContact}
+        />
       </>
     );
   }
