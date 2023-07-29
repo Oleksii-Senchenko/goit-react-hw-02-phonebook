@@ -9,21 +9,22 @@ class ContactForm extends Component {
 
   handleChange = ({ target }) => {
     const { name, value } = target;
-    this.setState({ [name]: value }, () => {});
-  };
-  handleSubmit = e => {
-    e.preventDefault();
-    const { name, number } = this.state;
-    if (!name || !number) {
-      return;
-    }
-    this.props.addContact({
-      name: name,
-      number: number,
-    });
-    this.setState({ name: '', number: '' });
+
+    this.setState({ [name]: value });
   };
 
+  handleSubmit = e => {
+    e.preventDefault();
+
+    this.props.addContact({
+      name: this.state.name,
+      number: this.state.number,
+    });
+    this.setState({
+      name: '',
+      number: '',
+    });
+  };
 
   render() {
     return (

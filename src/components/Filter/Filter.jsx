@@ -1,6 +1,6 @@
-import css from './Filter.module.css'; // Импорт CSS-модуля
+import css from './Filter.module.css';
 
-function Filter({ searchQuery, onChange }) {
+function Filter({ onChange, searchQuery }) {
   return (
     <form className={css.form}>
       <label htmlFor="" className={css.label}>

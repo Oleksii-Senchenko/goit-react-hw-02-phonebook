@@ -17,38 +17,32 @@ export class App extends Component {
   };
 
   addContact = data => {
-    const finedNumber = this.state.contacts.find(
-      contact => contact.number.toLowerCase() === data.number.toLowerCase()
-    );
-    if (finedNumber) {
-      alert(
-        `In your phoneBook already have this number his name is ${finedNumber.name}`
-      );
-      return;
-    }
-    const contact = {
+    const newContact = {
       ...data,
       id: nanoid(),
     };
+
     this.setState(prevState => ({
-      contacts: [...prevState.contacts, contact],
+      contacts: [...prevState.contacts, newContact],
     }));
   };
 
   onChange = ({ target }) => {
     const normalizedValue = target.value.trim().toLowerCase();
 
-    this.setState({ searchQuery: normalizedValue });
+    this.setState({
+      searchQuery: normalizedValue,
+    });
   };
 
   getFilteredContacts = () => {
-    const normalizedFilter = this.state.searchQuery.toLowerCase();
+    const normalizedFilter = this.state.searchQuery.trim().toLowerCase();
     return this.state.contacts.filter(({ name }) =>
       name.toLowerCase().includes(normalizedFilter)
     );
   };
 
-  deleteContact = id => {
+  deliteElement = id => {
     this.setState(prevState => ({
       contacts: prevState.contacts.filter(contact => contact.id !== id),
     }));
@@ -59,11 +53,10 @@ export class App extends Component {
     return (
       <>
         <ContactForm addContact={this.addContact} />
-        <Filter searchQuery={this.state.searchQuery} onChange={this.onChange} />
+        <Filter onChange={this.onChange} searchQuery={this.state.searchQuery} />
         <ContactList
           contacts={filteredContacts}
-          title={'Contacts'}
-          deleteContact={this.deleteContact}
+          deliteElement={this.deliteElement}
         />
       </>
     );
