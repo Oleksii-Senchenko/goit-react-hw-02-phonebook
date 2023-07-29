@@ -1,5 +1,5 @@
 import css from './Filter.module.css';
-
+import PropTypes from 'prop-types';
 function Filter({ onChange, searchQuery }) {
   return (
     <form className={css.form}>
@@ -21,3 +21,8 @@ function Filter({ onChange, searchQuery }) {
 }
 
 export default Filter;
+
+Filter.propTypes = {
+  onChange: PropTypes.func,
+  searchQuery: PropTypes.string,
+};
