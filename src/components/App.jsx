@@ -17,6 +17,15 @@ export class App extends Component {
   };
 
   addContact = data => {
+    const finedNumber = this.state.contacts.find(
+      contact => contact.number.toLowerCase() === data.number.toLowerCase()
+    );
+    if (finedNumber) {
+      alert(
+        `In your phoneBook already have this number his name is ${finedNumber.name}`
+      );
+      return;
+    }
     const newContact = {
       ...data,
       id: nanoid(),
